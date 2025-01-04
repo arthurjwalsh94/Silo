@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:14
+    container_name: silo_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mySecretPass
+      POSTGRES_DB: silo_database
+    ports:
+      - '5432:5432'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
