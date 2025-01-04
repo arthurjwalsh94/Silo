@@ -1,0 +1,52 @@
+{
+  "name": "Frontend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "root": "apps/Frontend",
+  "sourceRoot": "apps/Frontend/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "dev": {
+      "executor": "@nx/next:dev",
+      "options": {
+        "buildTarget": "Frontend:build"
+      }
+    },
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/Frontend"
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "options": {
+        "buildTarget": "Frontend:build"
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "Frontend:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/Frontend/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{projectRoot}/coverage"],
+      "options": {
+        "passWithNoTests": true,
+        "testPathPattern": ["apps/Frontend"],
+        "config": "apps/Frontend/jest.config.ts"
+      }
+    }
+  }
+}
