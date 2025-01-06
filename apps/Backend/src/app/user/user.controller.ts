@@ -1,5 +1,6 @@
-import { Controller, Post, Get, Body } from '@nestjs/common';
+import { Controller, Post, Get, Body, UseGuards, Request } from '@nestjs/common';
 import { UserService } from './user.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('user')
 export class UserController {
@@ -14,5 +15,12 @@ export class UserController {
   findAll() {
     return this.userService.findAll();
   }
-}
 
+  // Protected route example
+  @Get('profile')
+  @UseGuards(AuthGuard('jwt'))
+  getProfile(@Request() req) {
+    // req.user comes from the JWTStrategy validate() return value
+    return req.user;
+  }
+}

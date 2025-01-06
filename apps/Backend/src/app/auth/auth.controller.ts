@@ -12,11 +12,18 @@ export class AuthController {
 
   @Post('login')
   async login(@Body('username') username: string, @Body('password') password: string) {
-    const user = await this.authService.validateUser(username, password);
-    if (!user) {
+    // Call the login method in auth.service.ts
+    const result = await this.authService.login(username, password);
+
+    // If result is null, credentials were invalid
+    if (!result) {
       return { success: false, message: 'Invalid credentials' };
     }
-    // For now, just respond with a success. Later, you'll generate a JWT.
-    return { success: true, user };
+
+    // Otherwise, return the token
+    return {
+      success: true,
+      token: result.access_token,
+    };
   }
 }
