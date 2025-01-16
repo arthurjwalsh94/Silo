@@ -12,6 +12,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { AuthGuard } from '@nestjs/passport';
 import { MediaService } from './media.service';
+import { Express } from 'express'; // For type checking Express.Multer.File
+// (Optional) import { Request as ExpressRequest } from 'express';
 
 @Controller('media')
 export class MediaController {
@@ -29,7 +31,10 @@ export class MediaController {
       },
     }),
   }))
-  async uploadFile(@UploadedFile() file: Express.Multer.File, @Request() req) {
+  async uploadFile(
+    @UploadedFile() file: Express.Multer.File, 
+    @Request() req /* or @Request() req: ExpressRequest if you want typed req */
+  ) {
     if (!file) {
       throw new BadRequestException('No file uploaded');
     }
